@@ -15,7 +15,7 @@ import Boar from '../Images/Boar.jpg'
 import Ram from '../Images/Ram.jpg'
 import Hare from '../Images/Hare.jpg'
 
-const CreateJutsu = () => {
+const ExtendedCreateJutsu = () => {
 
     const options = [
         {
@@ -229,4 +229,4 @@ const CreateJutsu = () => {
     )
 }
 
-export default CreateJutsu
+export default ExtendedCreateJutsu
