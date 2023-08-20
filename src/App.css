@@ -115,7 +115,7 @@ time, mark, audio, video {
 }
 
 .jutsuForm form {
-  height: 100%;
+  height: 50%;
   width: 100%;
 }
 
@@ -123,13 +123,30 @@ time, mark, audio, video {
   height: 25%;
 }
 
-.jutsuForm div.secondRow {
+.jutsuForm div.firstRow {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   padding: 25px 25px;
 }
 
-.jutsuForm div.secondRow img.selectImgContainer {
-  background-color: #000000;
+.jutsuForm div.beforeCreation {
+  font-size: xx-large;
+} 
+
+.jutsuForm div.tableHouse {
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.jutsuForm table {
+  width: 20%;
+  border: 5px solid white;
+}
+
+.jutsuForm tr.jutsuHeader {
+  font-size: 45px;
 }

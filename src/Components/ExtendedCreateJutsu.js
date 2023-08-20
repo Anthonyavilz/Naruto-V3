@@ -130,6 +130,10 @@ const CreateJutsu = () => {
             jutsuName: jutsu
         }
 
+        // const nameBody = {
+        //     nameEntry: jutsu
+        // }
+
         await
             axios
                 .post('http://localhost:1234/naruto', submitBody)
@@ -139,6 +143,14 @@ const CreateJutsu = () => {
                     setJutsu('')
                 })
                 .catch(err => console.log(err))
+
+        // await
+        //     axios
+        //         .post('http://localhost:1234/test', nameBody)
+        //         .then((res) => {
+        //             console.log('second axios submit', res.data)
+        //         })
+        //         .catch(err => console.log(err))
     }
 
 

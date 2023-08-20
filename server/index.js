@@ -11,7 +11,11 @@ app.use(cors())
 app.post('/naruto', createJu)
 app.get('/naruto', getJu)
 app.put('/naruto/:id', modifyJu)
-app.delete(`naruto/:id`, deleteJu)
+app.delete(`/naruto/:id`, deleteJu)
+
+// app.post('/test', createName)
+// app.get('/test', getNames)
+
 
 
 const port = 1234;

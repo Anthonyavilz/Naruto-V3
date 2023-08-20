@@ -82,31 +82,25 @@ const CreateJutsu = () => {
 
     const [userJutsus, setUserJutsus] = useState([])
     const [selectedOption, setSelectedOption] = useState([])
-    const [jutsu, setJutsu] = useState('')
-    console.log(selectedOption)
+    const [jutsuEntry, setJutsuEntry] = useState('')
 
-    // const fetchJutsus = () => {
-    //         axios
-    //             .get('http://localhost:1234/naruto')
-    //             .then((res) => {
-    //                 setUserJutsus(res.data)
-    //                 // console.log('line 14', res.data)
-    //             })
-    //             .catch(err => console.log(err))
-    // }
-
-    // useEffect(() => {
-    //     fetchJutsus()
-    // }, [])
-
-    // console.log('line 23', userJutsus)
+    const fetchJutsus = async () => {
+        await
+            axios
+                .get('http://localhost:1234/naruto')
+                .then((res) => {
+                    console.log('line 92', res.data)
+                    setUserJutsus(res.data)
+                })
+                .catch(err => console.log(err))
+    }
 
     const handleSelectedOption = (selected) => {
-        setSelectedOption(prev => [...prev, selected.value])
+        setSelectedOption(prev => [...prev, selected.label])
     }
 
     const handleJutsuName = (e) => {
-        setJutsu(e.target.value)
+        setJutsuEntry(e.target.value)
     }
 
     const handleSubmit = async (e) => {
@@ -118,7 +112,7 @@ const CreateJutsu = () => {
         console.log('line 114', selectedOption[3])
         console.log('line 115', selectedOption[4])
         console.log('line 116', selectedOption[5])
-        console.log('line 117', jutsu)
+        console.log('line 117', jutsuEntry)
 
         const submitBody = {
             sealOne: selectedOption[0],
@@ -127,7 +121,7 @@ const CreateJutsu = () => {
             sealFour: selectedOption[3],
             sealFive: selectedOption[4],
             sealSix: selectedOption[5],
-            jutsuName: jutsu
+            jutsuName: jutsuEntry
         }
 
         await
@@ -135,17 +129,81 @@ const CreateJutsu = () => {
                 .post('http://localhost:1234/naruto', submitBody)
                 .then((res) => {
                     console.log(res.data)
+                    // setUserJutsus(res.data)
+                    fetchJutsus()
                     setSelectedOption([])
-                    setJutsu('')
+                    setJutsuEntry('')
                 })
                 .catch(err => console.log(err))
     }
+
+    const handleDelete = async (id) => {
+        await
+            axios
+                .delete(`http://localhost:1234/naruto/${id}`)
+                .then(res => {
+                    fetchJutsus()
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+    }
+
+
+    const mappedJutsu = userJutsus.map((jutsu) => {
+        return (
+            <div className="tableHouse">
+                <table>
+                    <thead>
+                        <tr className="jutsuHeader">
+                            <td colSpan='2'>{jutsu.jutsuName}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr className="tableRowOne">
+                            <td>{jutsu.sealOne}</td>
+                            <td>{jutsu.sealTwo}</td>
+                        </tr>
+                        <tr className="tableRowTwo">
+                            <td>{jutsu.sealThree}</td>
+                            <td>{jutsu.sealFour}</td>
+                        </tr>
+                        <tr className="tableRowThree">
+                            <td>{jutsu.sealFive}</td>
+                            <td>{jutsu.sealSix}</td>
+                        </tr>
+                        <tr>
+                            <td colSpan='2'><button onClick={() => handleDelete(jutsu.id)}>Delete</button></td> 
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        )
+    })
+
+    const selectStyles = {
+        container: provided => ({
+            ...provided,
+            width: '200px',
+        }),
+        control: provided => ({
+            ...provided,
+            backgroundColor: 'black',
+            borderColor: 'white',
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isFocused ? 'gray' : 'black',
+            color: 'white',
+        }),
+    };
+
 
 
     return (
         <div className="jutsuForm">
             <form onSubmit={handleSubmit}>
-                <div className="secondRow">
+                <div className="firstRow">
                     {Array.from({ length: 6 }).map((_, index) => (
                         <Select
                             key={index}
@@ -154,21 +212,29 @@ const CreateJutsu = () => {
                             options={options}
                             formatOptionLabel={seals => (
                                 <div className="selectImgContainer">
-                                    <img src={seals.image} alt={seals.label} width='70px' height='70px' />
+                                    <img src={seals.image} alt={seals.label} width='100px' height='100px' />
                                     <br/>
                                     <label>{seals.label}</label>
                                 </div>
                             )}
+                            styles={selectStyles}
                         />
                     ))}
                 </div>
-                <div className="firstRow">
-                    <input type="text" value={jutsu} onChange={handleJutsuName} placeholder="Enter Jutsu Name" />
+                <div className="secondRow">
+                    <input type="text" value={jutsuEntry} onChange={handleJutsuName} placeholder="Enter Jutsu Name" />
                 </div>
                 <div className="thirdRow">
                     <button type="submit">Submit</button>
                 </div>
             </form>
+            <br/>
+            {mappedJutsu.length >= 1 ? mappedJutsu 
+            : 
+            <div className="beforeCreation">
+                <h1> Create a Jutsu Above!</h1>
+            </div>
+            }
         </div>
     )
 }

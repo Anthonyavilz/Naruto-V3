@@ -1,5 +1,7 @@
 let userJutsu = require('../db.json')
 let id = 1;
+// let name = []
+// let nameID = 1
 
 module.exports = {
     createJu: (req, res) => {
@@ -19,6 +21,21 @@ module.exports = {
         console.log(userJutsu)
         res.status(200).send(userJutsu);
     },
+
+    // createName: (req, res) => {
+    //     const { nameEntry } = req.body
+    //     name.push({
+    //         nameID: nameID,
+    //         nameEntry
+    //     })
+    //     nameID++
+    //     console.log(name)
+    //     res.status(200).send(name)
+    // },
+
+    // getNames: (req, res) => {
+    //     res.status(200).send(name)
+    // },
 
     getJu: (req, res) => {
         res.status(200).send(userJutsu);
@@ -41,18 +58,17 @@ module.exports = {
             jutsuName: jutsuName || jutsu.jutsuName
 
         }
-        res.status(200).json(userJutsu)
+        res.status(200).send(userJutsu)
     },
 
     deleteJu: (req, res) => {
         const {id} = req.params;
         console.log(id);
-        const index = userJutsu.findIndex(val => {
-            if(val.id === true) {
-                return true;
-            }
-        });
+        const index = userJutsu.findIndex(val => val.id == id)
+        if (index === -1) {
+            return res.status(400).json({message: 'jutsu not found'})
+        }
         userJutsu.splice(index, 1);
-        res.status(200).json(userJutsu);
+        res.status(200).send(userJutsu);
     }
 }
