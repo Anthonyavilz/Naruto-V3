@@ -5,7 +5,7 @@ import Header from './Components/Header';
 import HomePage from './Components/HomePage';
 import HandSigns from './Components/HandSigns';
 import CreateJutsu from './Components/CreateJutsu';
-import VillagePage from './Components/Villages/VillagePage';
+import VillagePage from './Components/VillagePage';
 import LeafVillage from './Components/Villages/LeafVillage';
 import SandVillage from './Components/Villages/SandVillage';
 import CloudVillage from './Components/Villages/CloudVillage';
@@ -21,13 +21,14 @@ function App() {
         <Route path='/' element={<HomePage/>} />
         <Route path='/handSigns' element={<HandSigns/>} />
         <Route path='/createJutsu' element={<CreateJutsu/>} />
-        <Route path='/villages' element={<VillagePage/>}>
-          <Route path='villages/leafVillage' element={<LeafVillage/>} />
-          <Route path='villages/sandVillage' element={<SandVillage/>} />
-          <Route path='villages/cloudVillage' element={<CloudVillage/>} />
-          <Route path='villages/earthVillage' element={<EarthVillage/>} />
-          <Route path='villages/waterVillage' element={<WaterVillage/>} />
-          <Route path='villages/rainVillage' element={<RainVillage/>} />
+        <Route path='/villages'>
+          <Route index element={<VillagePage/>} />
+          <Route path='leafVillage' element={<LeafVillage/>} />
+          <Route path='sandVillage' element={<SandVillage/>} />
+          <Route path='cloudVillage' element={<CloudVillage/>} />
+          <Route path='earthVillage' element={<EarthVillage/>} />
+          <Route path='waterVillage' element={<WaterVillage/>} />
+          <Route path='rainVillage' element={<RainVillage/>} />
         </Route>
         <Route path='*' element={<HomePage/>} />
       </Routes>
@@ -36,3 +37,6 @@ function App() {
 }
 
 export default App;
+
+
+// when I create the bigger project, doing like <Route index element={}/> with a defined path above like <Route path='/naruto'/> will work how I want the different projects to be nested. I would just have to double nest for the village map thing to work
